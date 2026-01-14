@@ -23,11 +23,24 @@ export default function Dashboard() {
                     id="dashboard-circle"
                     className="flex flex-col w-1/3 items-end"
                 >
-                    <Circle size="2.5rem" className="py-3 mr-1" />
+                    <Circle
+                        size={isHovered ? "5.25rem" : "2.5rem"}
+                        className={isHovered ? "py-7 mr-0.5" : "py-3 mr-1"}
+                    />
                 </div>
                 <div id="dashboard-buttons" className="flex flex-col">
                     {items.map((item) => (
-                        <Link className="" href={item.link} key={item.text}>
+                        <Link
+                            className=""
+                            onMouseEnter={() => {
+                                setIsHovered(true);
+                            }}
+                            onMouseLeave={() => {
+                                setIsHovered(false);
+                            }}
+                            href={item.link}
+                            key={item.text}
+                        >
                             {item.text}
                         </Link>
                     ))}

@@ -18,16 +18,11 @@ export default function Dashboard() {
             id="dashboard"
             className="w-1/12 h-screen bg-background dark:bg-black"
         >
-            <div className="flex flex-row mt-5 h-1/4">
+            <div className="flex flex-row mt-5 h-1/5">
                 <div
-                    id="dashboard-circle"
+                    id="dashboard-space-left"
                     className="flex flex-col w-1/3 items-end"
-                >
-                    <Circle
-                        size={isHovered ? "5.25rem" : "2.5rem"}
-                        className={isHovered ? "py-7 mr-0.5" : "py-3 mr-1"}
-                    />
-                </div>
+                ></div>
                 <div id="dashboard-buttons" className="flex flex-col">
                     {items.map((item) => (
                         <Link

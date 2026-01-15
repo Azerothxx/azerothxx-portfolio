@@ -88,8 +88,8 @@ function AnimatedText({
 function AnimatedSecondText({ start }: { start: boolean }) {
     const { position, opacity } = useSpring({
         position: start
-            ? ([-3, -2, 0] as [number, number, number])
-            : ([-3, 1, 0] as [number, number, number]),
+            ? ([-2.8, -2, 0] as [number, number, number])
+            : ([-2.8, -3, 0] as [number, number, number]),
         opacity: start ? 0.5 : 0,
         config: { duration: 800 },
     });
@@ -122,10 +122,10 @@ function AnimatedSecondText({ start }: { start: boolean }) {
 function AnimatedCommIcons({ start }: { start: boolean }) {
     const { position, opacity } = useSpring({
         position: start
-            ? ([1.2, -2, 0] as [number, number, number])
-            : ([1.2, -3, 0] as [number, number, number]),
+            ? ([2.3, -2, 0] as [number, number, number])
+            : ([2.3, -3, 0] as [number, number, number]),
         opacity: start ? 0.8 : 0,
-        config: { duration: 800 },
+        config: { duration: 800, delay: 10000 },
     });
 
     return (
@@ -145,6 +145,53 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
                 </animatedWeb.div>
             </Html>
         </animated.group>
+    );
+}
+
+function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
+    return (
+        <div className="flex flex-row gap-6 max-w-4xl">
+            {Object.values(toolsData).map((section, sectionIndex) => (
+                <div
+                    key={section.title}
+                    className="flex flex-col items-center flex-1"
+                >
+                    <animatedWeb.h2
+                        className="text-2xl font-bold text-white mb-3"
+                        style={{
+                            opacity: listItemsStart ? 1 : 0,
+                            transform: listItemsStart
+                                ? "translateY(0px)"
+                                : "translateY(20px)",
+                            transition: `all 0.6s ease ${sectionIndex * 0.2}s`,
+                        }}
+                    >
+                        {section.title}
+                    </animatedWeb.h2>
+                    <ul className="flex flex-wrap gap-2 justify-center">
+                        {section.items.map((item, itemIndex) => (
+                            <animatedWeb.li
+                                key={item}
+                                className="text-white/80 border border-white/10 rounded px-3 py-2"
+                                style={{
+                                    opacity: listItemsStart ? 1 : 0,
+                                    transform: listItemsStart
+                                        ? "translateY(0px)"
+                                        : "translateY(20px)",
+                                    transition: `all 0.6s ease ${
+                                        sectionIndex * 0.2 +
+                                        0.3 +
+                                        itemIndex * 0.1
+                                    }s`,
+                                }}
+                            >
+                                {item}
+                            </animatedWeb.li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
     );
 }
 
@@ -199,51 +246,8 @@ export default function Home() {
                     <AnimatedCommIcons start={secondTextStart} />
                 </Canvas>
             </div>
-            <div className="h-1/3 w-full p-8 flex ">
-                <div className="flex flex-row gap-6 max-w-4xl">
-                    {Object.values(toolsData).map((section, sectionIndex) => (
-                        <div
-                            key={section.title}
-                            className="flex flex-col items-center flex-1"
-                        >
-                            <animatedWeb.h2
-                                className="text-2xl font-bold text-white mb-3"
-                                style={{
-                                    opacity: listItemsStart ? 1 : 0,
-                                    transform: listItemsStart
-                                        ? "translateY(0px)"
-                                        : "translateY(20px)",
-                                    transition: `all 0.6s ease ${
-                                        sectionIndex * 0.2
-                                    }s`,
-                                }}
-                            >
-                                {section.title}
-                            </animatedWeb.h2>
-                            <ul className="flex flex-wrap gap-2 justify-center">
-                                {section.items.map((item, itemIndex) => (
-                                    <animatedWeb.li
-                                        key={item}
-                                        className="text-white/80 border border-white/10 rounded px-3 py-2"
-                                        style={{
-                                            opacity: listItemsStart ? 1 : 0,
-                                            transform: listItemsStart
-                                                ? "translateY(0px)"
-                                                : "translateY(20px)",
-                                            transition: `all 0.6s ease ${
-                                                sectionIndex * 0.2 +
-                                                0.3 +
-                                                itemIndex * 0.1
-                                            }s`,
-                                        }}
-                                    >
-                                        {item}
-                                    </animatedWeb.li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
+            <div className="h-1/3 w-full p-8 flex justify-around">
+                <AnimatedListItems listItemsStart={listItemsStart} />
             </div>
         </div>
     );

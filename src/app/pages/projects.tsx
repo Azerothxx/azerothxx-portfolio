@@ -215,7 +215,7 @@ const toolsData = {
     },
 };
 
-export default function Home() {
+export default function Projects() {
     const [textStart, setTextStart] = useState(false);
     const [secondTextStart, setSecondTextStart] = useState(false);
     const [listItemsStart, setListItemsStart] = useState(false);

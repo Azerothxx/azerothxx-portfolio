@@ -16,7 +16,7 @@ export default function Dashboard() {
     return (
         <div
             id="dashboard"
-            className="w-1/12 h-screen bg-background dark:bg-black"
+            className="fixed top-0 left0 w-1/12  bg-background dark:bg-black"
         >
             <div className="flex flex-row mt-5 h-1/5">
                 <div

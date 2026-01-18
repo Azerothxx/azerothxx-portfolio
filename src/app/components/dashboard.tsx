@@ -1,23 +1,17 @@
 "use client";
 
-import { Circle } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Dashboard() {
-    const [isHovered, setIsHovered] = useState(false);
     const items = [
-        { text: "Home", link: "/" },
-        { text: "Projects", link: "/projects" },
-        { text: "Pricing", link: "/pricing" },
-        { text: "TOS", link: "/tos" },
+        { text: "Home", link: "#title" },
+        { text: "Projects", link: "#projects" },
+        { text: "Pricing", link: "#pricing" },
+        { text: "TOS", link: "#tos" },
     ];
 
     return (
-        <div
-            id="dashboard"
-            className="fixed top-0 left0 w-1/12  bg-background dark:bg-black"
-        >
+        <div id="dashboard" className="fixed top-0 left-0 w-1/12 z-50">
             <div className="flex flex-row mt-5 h-1/5">
                 <div
                     id="dashboard-space-left"
@@ -25,17 +19,7 @@ export default function Dashboard() {
                 ></div>
                 <div id="dashboard-buttons" className="flex flex-col">
                     {items.map((item) => (
-                        <Link
-                            className=""
-                            onMouseEnter={() => {
-                                setIsHovered(true);
-                            }}
-                            onMouseLeave={() => {
-                                setIsHovered(false);
-                            }}
-                            href={item.link}
-                            key={item.text}
-                        >
+                        <Link href={item.link} key={item.text}>
                             {item.text}
                         </Link>
                     ))}

@@ -17,6 +17,11 @@
     transition: all 0.1s ease-in;
 }
 
+.home-section {
+    display: flex;
+    flex-direction: column;
+}
+
 :root {
     --background: #ffffff;
     --foreground: #171717;

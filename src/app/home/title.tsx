@@ -81,7 +81,7 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
     const textRef = useRef<Group>(null);
     const [start, setStart] = useState(false);
 
-    const springs = useSpring({
+    const { position } = useSpring({
         position: start
             ? ([0, 1, 0] as [number, number, number])
             : ([-7, 1, 0] as [number, number, number]),
@@ -117,7 +117,7 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
     }, [clippingPlane]);
 
     return (
-        <animated.group ref={textRef} position={springs.position}>
+        <animated.group ref={textRef} position={position}>
             <Text fontSize={0.35} color="#ffffff" anchorX="left">
                 FULL STACK LUAU{"\n"}DEVELOPER
             </Text>

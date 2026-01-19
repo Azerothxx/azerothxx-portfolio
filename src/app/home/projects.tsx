@@ -1,57 +1,6 @@
 "use client";
-import { useSpring, animated, useTrail } from "@react-spring/web";
-import { useEffect, useRef, useState } from "react";
-
-const projectVideos: {
-    title: string;
-    videoSrc?: string; // Optional - will show placeholder if not provided
-    description: string;
-    techStack: string[];
-}[] = [
-    {
-        title: "Project Title 1",
-        description:
-            "Description of the project. Explain what the project does, its purpose, and any notable features.",
-        techStack: ["Roblox-TS", "Knit", "FastCast", "Promise"],
-    },
-    {
-        title: "Project Title 2",
-        description:
-            "Another project description. This section slides in from the right side.",
-        techStack: ["Luau", "ProfileService", "Zap", "BT-Trees"],
-    },
-    // Add more:
-    // {
-    //     title: "New Project",
-    //     videoSrc: "/videos/project.mp4", // Add when ready
-    //     description: "Description here",
-    //     techStack: ["Tech1", "Tech2"],
-    // },
-];
-
-function useInView(threshold = 0.3) {
-    const ref = useRef<HTMLDivElement>(null);
-    const [inView, setInView] = useState(false);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setInView(true);
-                }
-            },
-            { threshold },
-        );
-
-        observer.observe(element);
-        return () => observer.disconnect();
-    }, [threshold]);
-
-    return { ref, inView };
-}
+import { useEffect, useState } from "react";
+import { useInView } from "@/hooks/useInView";
 
 interface VideoSectionProps {
     title: string;
@@ -62,78 +11,83 @@ interface VideoSectionProps {
     index: number;
 }
 
-function VideoSection({
-    title,
-    videoSrc,
-    description,
-    techStack,
-    fromLeft,
-}: VideoSectionProps) {
+const projectVideos: {
+    title: string;
+    videoSrc?: string; // Optional - will show placeholder if not provided
+    description: string;
+    techStack: string[];
+}[] = [
+    {
+        title: "Extensive Gun System",
+        videoSrc: "videos/gun-system.mp4",
+        description:
+            "Compability between R6 and R15 that allows for full customization for each individual gun. " +
+            "Also comes with a simple movement system of rolling left and right.",
+        techStack: ["Knit", "FastCast", "Trove", "Signal"],
+    },
+    {
+        title: "Snowy Mountain Ambience",
+        videoSrc: "videos/ambience-system.mp4",
+        description:
+            "Ambience system with complete zone detection that smoothly transitions effects of adjacent zones.",
+        techStack: ["Knit", "Trove", "Signal"],
+    },
+    // Add more:
+    // {
+    //     title: "New Project",
+    //     videoSrc: "/videos/project.mp4", // Add when ready
+    //     description: "Description here",
+    //     techStack: ["Tech1", "Tech2"],
+    // },
+];
+
+function VideoSection(props: VideoSectionProps) {
     const { ref, inView } = useInView(0.2);
     const [slideComplete, setSlideComplete] = useState(false);
 
-    const slideSpring = useSpring({
-        from: { x: fromLeft ? -100 : 100, opacity: 0 },
-        to: { x: inView ? 0 : fromLeft ? -100 : 100, opacity: inView ? 1 : 0 },
-        config: { tension: 80, friction: 20 },
-        onRest: () => {
-            if (inView) setSlideComplete(true);
-        },
-    });
-
-    const techTrail = useTrail(techStack.length, {
-        from: { y: 20, opacity: 0 },
-        to: {
-            y: slideComplete ? 0 : 20,
-            opacity: slideComplete ? 1 : 0,
-        },
-        config: { tension: 120, friction: 14 },
-    });
+    useEffect(() => {
+        if (inView) {
+            const timer = setTimeout(() => setSlideComplete(true), 500);
+            return () => clearTimeout(timer);
+        }
+    }, [inView]);
 
     return (
         <div ref={ref} className="relative py-16 overflow-hidden">
-            <animated.div
-                style={{
-                    transform: slideSpring.x.to(
-                        (x) => `translateX(${x * 0.5}%)`,
-                    ),
-                    opacity: slideSpring.opacity,
-                }}
-                className={`absolute top-4 bottom-4 w-[90%] bg-white/5 rounded-2xl -z-10 ${
-                    fromLeft ? "left-0 -ml-20" : "right-0 -mr-20"
-                }`}
+            {/* Background panel */}
+            <div
+                className={`absolute top-4 bottom-4 w-[90%] bg-white/5 rounded-2xl -z-10
+                    transition-all duration-500 ease-out
+                    ${props.fromLeft ? "left-0 -ml-20" : "right-0 -mr-20"}
+                    ${inView ? "opacity-100 translate-x-0" : `opacity-0 ${props.fromLeft ? "-translate-x-1/2" : "translate-x-1/2"}`}`}
             />
 
-            <animated.div
-                style={{
-                    transform: slideSpring.x.to((x) => `translateX(${x}px)`),
-                    opacity: slideSpring.opacity,
-                }}
-                className={`flex flex-col ${
-                    fromLeft ? "items-start" : "items-end"
-                } px-8 md:px-16`}
+            {/* Content */}
+            <div
+                className={`flex flex-col px-8 transition-all duration-500 ease-out
+                    ${props.fromLeft ? "items-start" : "items-end"}
+                    ${inView ? "opacity-100 translate-x-0" : `opacity-0 ${props.fromLeft ? "-translate-x-24" : "translate-x-24"}`}`}
             >
                 <h3
                     className={`text-3xl font-bold text-white mb-6 ${
-                        fromLeft ? "text-left" : "text-right"
+                        props.fromLeft ? "text-left" : "text-right"
                     }`}
                 >
-                    {title}
+                    {props.title}
                 </h3>
 
                 <div
-                    className={`flex flex-col md:flex-row gap-8 w-full max-w-5xl ${
-                        fromLeft ? "" : "md:flex-row-reverse"
+                    className={`flex flex-row gap-8 w-full max-w-5xl ${
+                        props.fromLeft ? "" : "flex-row-reverse"
                     }`}
                 >
                     <div className="flex-1 rounded-xl overflow-hidden bg-black/30">
-                        {videoSrc ? (
+                        {props.videoSrc ? (
                             <video
-                                src={videoSrc}
+                                src={props.videoSrc}
                                 className="w-full aspect-video object-cover"
                                 controls
                                 playsInline
-                                preload="metadata"
                             >
                                 Your browser does not support the video tag.
                             </video>
@@ -146,11 +100,11 @@ function VideoSection({
 
                     <div
                         className={`flex-1 flex flex-col gap-6 ${
-                            fromLeft ? "text-left" : "text-right"
+                            props.fromLeft ? "text-left" : "text-right"
                         }`}
                     >
                         <p className="text-white/80 text-lg leading-relaxed">
-                            {description}
+                            {props.description}
                         </p>
 
                         <div>
@@ -159,28 +113,29 @@ function VideoSection({
                             </h4>
                             <ul
                                 className={`flex flex-wrap gap-2 ${
-                                    fromLeft ? "justify-start" : "justify-end"
+                                    props.fromLeft
+                                        ? "justify-start"
+                                        : "justify-end"
                                 }`}
                             >
-                                {techTrail.map((style, i) => (
-                                    <animated.li
-                                        key={techStack[i]}
+                                {props.techStack.map((tech, i) => (
+                                    <li
+                                        key={tech}
                                         style={{
-                                            transform: style.y.to(
-                                                (y) => `translateY(${y}px)`,
-                                            ),
-                                            opacity: style.opacity,
+                                            transitionDelay: `${i * 75}ms`,
                                         }}
-                                        className="px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm"
+                                        className={`px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm
+                                            transition-all duration-300 ease-out
+                                            ${slideComplete ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
                                     >
-                                        {techStack[i]}
-                                    </animated.li>
+                                        {tech}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
                     </div>
                 </div>
-            </animated.div>
+            </div>
         </div>
     );
 }

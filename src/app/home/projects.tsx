@@ -59,14 +59,30 @@ function VideoSection(props: VideoSectionProps) {
                 className={`absolute top-4 bottom-4 w-[90%] bg-white/5 rounded-2xl -z-10
                     transition-all duration-500 ease-out
                     ${props.fromLeft ? "left-0 -ml-20" : "right-0 -mr-20"}
-                    ${inView ? "opacity-100 translate-x-0" : `opacity-0 ${props.fromLeft ? "-translate-x-1/2" : "translate-x-1/2"}`}`}
+                    ${
+                        inView
+                            ? "opacity-100 translate-x-0"
+                            : `opacity-0 ${
+                                  props.fromLeft
+                                      ? "-translate-x-1/2"
+                                      : "translate-x-1/2"
+                              }`
+                    }`}
             />
 
             {/* Content */}
             <div
                 className={`flex flex-col px-8 transition-all duration-500 ease-out
                     ${props.fromLeft ? "items-start" : "items-end"}
-                    ${inView ? "opacity-100 translate-x-0" : `opacity-0 ${props.fromLeft ? "-translate-x-24" : "translate-x-24"}`}`}
+                    ${
+                        inView
+                            ? "opacity-100 translate-x-0"
+                            : `opacity-0 ${
+                                  props.fromLeft
+                                      ? "-translate-x-24"
+                                      : "translate-x-24"
+                              }`
+                    }`}
             >
                 <h3
                     className={`text-3xl font-bold text-white mb-6 ${
@@ -126,7 +142,11 @@ function VideoSection(props: VideoSectionProps) {
                                         }}
                                         className={`px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm
                                             transition-all duration-300 ease-out
-                                            ${slideComplete ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                                            ${
+                                                slideComplete
+                                                    ? "opacity-100 translate-y-0"
+                                                    : "opacity-0 translate-y-5"
+                                            }`}
                                     >
                                         {tech}
                                     </li>

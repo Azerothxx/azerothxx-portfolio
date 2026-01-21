@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+:root {
+    --background: #000000;
+    --background1: #14213d;
+    --foreground: #fca311;
+    --foreground1: #e5e5e5;
+    --foreground2: #ffffff;
+}
+
 #dashboard-buttons a {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -20,27 +28,6 @@
 .home-section {
     display: flex;
     flex-direction: column;
-}
-
-:root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --foreground-hover: #1717176c;
-}
-
-@theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-        --foreground-hover: #ededed83;
-    }
 }
 
 body {

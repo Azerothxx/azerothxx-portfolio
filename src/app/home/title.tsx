@@ -1,5 +1,5 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Fish } from "../components/3d/fish";
 import { Text, Environment, Html } from "@react-three/drei";
 import { useSpring, animated } from "@react-spring/three";
@@ -13,7 +13,6 @@ import {
     SiPaypal,
     SiRoblox,
 } from "@icons-pack/react-simple-icons";
-import Projects from "./projects";
 
 const socialLinks = [
     {
@@ -59,6 +58,15 @@ const toolsData = [
     ],
 ];
 
+const getCSSColor = (variable: string) => {
+    if (typeof window !== "undefined") {
+        return getComputedStyle(document.documentElement)
+            .getPropertyValue(variable)
+            .trim();
+    }
+    return "#ffffff"; // fallback for SSR
+};
+
 function AnimatedFish() {
     const { position } = useSpring({
         from: { position: [-6, -4, 7] as [number, number, number] },
@@ -96,7 +104,7 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
 
     const clippingPlane = useMemo(
         () => new Plane(new Vector3(1, 0, 0), 0.5),
-        [],
+        []
     );
 
     useEffect(() => {
@@ -118,7 +126,11 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
 
     return (
         <animated.group ref={textRef} position={position}>
-            <Text fontSize={0.35} color="#ffffff" anchorX="left">
+            <Text
+                fontSize={0.35}
+                color={getCSSColor("--foreground2")}
+                anchorX="left"
+            >
                 FULL STACK LUAU{"\n"}DEVELOPER
             </Text>
         </animated.group>
@@ -140,7 +152,7 @@ function AnimatedSecondText({ start }: { start: boolean }) {
                 <Text
                     position={[0, 0, 0.01]}
                     fontSize={0.4}
-                    color="#ffffff"
+                    color={getCSSColor("--foreground2")}
                     anchorX="left"
                 >
                     <animated.meshBasicMaterial transparent opacity={opacity} />
@@ -149,7 +161,7 @@ function AnimatedSecondText({ start }: { start: boolean }) {
             </animated.mesh>
             <Html position={[-0.35, 0, 0]} center>
                 <animatedWeb.div style={{ opacity }}>
-                    <HardHat className="text-white" size={40} />
+                    <HardHat className="text-(--foreground2)" size={40} />
                 </animatedWeb.div>
             </Html>
         </animated.group>
@@ -175,7 +187,7 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`${hoverColor} hover:scale-110 transition-all duration-200 m-3`}
+                            className={`${hoverColor} text-(--foreground) hover:scale-110 transition-all duration-200 m-3`}
                         >
                             <Icon size={40} />
                         </a>

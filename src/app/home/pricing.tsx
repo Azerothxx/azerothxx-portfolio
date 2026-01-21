@@ -55,8 +55,16 @@ function PricingCard(props: PricingCardProps) {
             ref={ref}
             style={{ transitionDelay: `${props.delay}ms` }}
             className={`flex flex-col p-6 rounded-2xl border transition-all duration-500 ease-out
-                ${props.highlighted ? "bg-white/10 border-white/30 scale-105" : "bg-white/5 border-white/10"}
-                ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                ${
+                    props.highlighted
+                        ? "bg-white/10 border-white/30 scale-105"
+                        : "bg-white/5 border-white/10"
+                }
+                ${
+                    inView
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-12"
+                }`}
         >
             {props.highlighted && (
                 <span className="text-xs uppercase tracking-wider text-white/60 mb-2">
@@ -111,7 +119,7 @@ export default function Pricing() {
             </p>
 
             <div className="flex items-center gap-2 text-white/50 text-sm mb-12">
-                <SiPaypal className="text-[#00457C]" />
+                <SiPaypal />
                 <span>PayPal only. Fees covered by sender.</span>
             </div>
 

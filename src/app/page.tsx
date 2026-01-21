@@ -3,7 +3,7 @@ import Dashboard from "./components/dashboard";
 
 export default function Page() {
     return (
-        <div>
+        <div className="bg-(--background)">
             <Dashboard />
             <Home />
         </div>

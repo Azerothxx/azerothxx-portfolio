@@ -19,7 +19,11 @@ export default function Dashboard() {
                 ></div>
                 <div id="dashboard-buttons" className="flex flex-col">
                     {items.map((item) => (
-                        <Link href={item.link} key={item.text}>
+                        <Link
+                            href={item.link}
+                            key={item.text}
+                            className="text-(--foreground2) py-2 transition-all duration-0.1s ease-out hover:text-(--foreground) hover:text-3xl hover:py-6 hover:font-bold"
+                        >
                             {item.text}
                         </Link>
                     ))}

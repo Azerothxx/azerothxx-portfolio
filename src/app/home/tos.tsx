@@ -1,5 +1,5 @@
 "use client";
-import { useInView } from "@/hooks/useInView";
+import { useInView } from "../components/hooks/useInView";
 
 const tosItems = [
     [
@@ -50,13 +50,13 @@ function TOSItem(props: TOSItemProps) {
         <div
             ref={ref}
             style={{ transitionDelay: `${(props.index % 4) * 80}ms` }}
-            className={`p-5 bg-white/5 border border-white/10 rounded-xl transition-all duration-500 ease-out
+            className={`p-5 bg-(--foreground2)/5 border border-(--foreground2)/10 rounded-xl transition-all duration-500 ease-out
                 ${inView ? "opacity-100 translate-x-0" : `opacity-0 ${fromLeft ? "-translate-x-8" : "translate-x-8"}`}`}
         >
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-lg font-semibold text-(--foreground2) mb-2">
                 {props.title}
             </h3>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-(--foreground2)/70 text-sm leading-relaxed">
                 {props.content}
             </p>
         </div>
@@ -66,10 +66,10 @@ function TOSItem(props: TOSItemProps) {
 export default function TOS() {
     return (
         <div className="home-section items-center py-20" id="tos">
-            <h2 className="text-4xl font-bold text-white text-center mb-4">
+            <h2 className="text-4xl font-bold text-(--foreground2) text-center mb-4">
                 Terms of Service
             </h2>
-            <p className="text-white/60 text-center mb-12 max-w-xl">
+            <p className="text-(--foreground2)/60 text-center mb-12 max-w-xl">
                 Please review the following terms before commissioning work.
             </p>
 
@@ -84,7 +84,7 @@ export default function TOS() {
                 ))}
             </div>
 
-            <p className="text-white/40 text-sm text-center mt-12 max-w-xl">
+            <p className="text-(--foreground2)/40 text-sm text-center mt-12 max-w-xl">
                 By commissioning work, you agree to these terms. If you have any
                 questions, please contact me before placing an order.
             </p>

@@ -1,6 +1,6 @@
 "use client";
 import { Check } from "lucide-react";
-import { useInView } from "@/hooks/useInView";
+import { useInView } from "../components/hooks/useInView";
 import { SiPaypal } from "@icons-pack/react-simple-icons";
 
 interface PricingCardProps {
@@ -57,8 +57,8 @@ function PricingCard(props: PricingCardProps) {
             className={`flex flex-col p-6 rounded-2xl border transition-all duration-500 ease-out
                 ${
                     props.highlighted
-                        ? "bg-white/10 border-white/30 scale-105"
-                        : "bg-white/5 border-white/10"
+                        ? "bg-(--foreground2)/10 border-(--foreground2)/30 scale-105"
+                        : "bg-(--foreground2)/5 border-(--foreground2)/10"
                 }
                 ${
                     inView
@@ -67,23 +67,23 @@ function PricingCard(props: PricingCardProps) {
                 }`}
         >
             {props.highlighted && (
-                <span className="text-xs uppercase tracking-wider text-white/60 mb-2">
+                <span className="text-xs uppercase tracking-wider text-(--foreground2)/60 mb-2">
                     Most Popular
                 </span>
             )}
-            <h3 className="text-2xl font-bold text-white">{props.name}</h3>
+            <h3 className="text-2xl font-bold text-(--foreground2)">{props.name}</h3>
             <div className="mt-4">
-                <span className="text-4xl font-bold text-white">
+                <span className="text-4xl font-bold text-(--foreground2)">
                     {props.price}
                 </span>
             </div>
-            <p className="mt-2 text-white/60 text-sm">{props.description}</p>
+            <p className="mt-2 text-(--foreground2)/60 text-sm">{props.description}</p>
 
             <ul className="mt-6 flex flex-col gap-3 flex-1">
                 {props.features.map((feature) => (
                     <li
                         key={feature}
-                        className="flex items-center gap-2 text-white/80 text-sm"
+                        className="flex items-center gap-2 text-(--foreground2)/80 text-sm"
                     >
                         <Check size={16} className="text-green-400 shrink-0" />
                         {feature}
@@ -97,8 +97,8 @@ function PricingCard(props: PricingCardProps) {
                 rel="noopener noreferrer"
                 className={`mt-6 py-3 px-6 rounded-lg text-center font-medium transition-all duration-200 ${
                     props.highlighted
-                        ? "bg-white text-black hover:bg-white/90"
-                        : "bg-white/10 text-white hover:bg-white/20"
+                        ? "bg-(--foreground) text-black hover:bg-(--foreground)/90"
+                        : "bg-(--foreground2)/10 text-(--foreground2) hover:bg-(--foreground2)/20"
                 }`}
             >
                 Contact Me
@@ -110,17 +110,17 @@ function PricingCard(props: PricingCardProps) {
 export default function Pricing() {
     return (
         <div className="home-section items-center py-20" id="pricing">
-            <h2 className="text-4xl font-bold text-white text-center mb-4">
+            <h2 className="text-4xl font-bold text-(--foreground2) text-center mb-4">
                 Pricing
             </h2>
-            <p className="text-white/60 text-center mb-6 max-w-xl">
+            <p className="text-(--foreground2)/60 text-center mb-6 max-w-xl">
                 Flexible pricing for projects of all sizes. Contact me for a
                 custom quote.
             </p>
 
-            <div className="flex items-center gap-2 text-white/50 text-sm mb-12">
+            <div className="flex items-center gap-2 text-(--foreground2)/50 text-sm mb-12">
                 <SiPaypal />
-                <span>PayPal only. Fees covered by sender.</span>
+                <span>Fees covered by sender.</span>
             </div>
 
             <div className="grid grid-cols-3 gap-6 w-4/5 max-w-5xl">

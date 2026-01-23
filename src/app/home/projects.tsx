@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useInView } from "@/hooks/useInView";
+import { useInView } from "../components/hooks/useInView";
 
 interface VideoSectionProps {
     title: string;
@@ -53,12 +53,12 @@ function VideoSection(props: VideoSectionProps) {
     }, [inView]);
 
     return (
-        <div ref={ref} className="relative py-16 overflow-hidden">
+        <div ref={ref} className="relative py-16">
             {/* Background panel */}
             <div
-                className={`absolute top-4 bottom-4 w-[90%] bg-white/5 rounded-2xl -z-10
+                className={`absolute top-4 bottom-4 w-[85%] bg-(--background1) rounded-2xl -z-10
                     transition-all duration-500 ease-out
-                    ${props.fromLeft ? "left-0 -ml-20" : "right-0 -mr-20"}
+                    ${props.fromLeft ? "left-0 ml-0" : "right-0 mr-0"}
                     ${
                         inView
                             ? "opacity-100 translate-x-0"
@@ -72,7 +72,7 @@ function VideoSection(props: VideoSectionProps) {
 
             {/* Content */}
             <div
-                className={`flex flex-col px-8 transition-all duration-500 ease-out
+                className={`flex flex-col px-20 transition-all duration-500 ease-out
                     ${props.fromLeft ? "items-start" : "items-end"}
                     ${
                         inView
@@ -85,7 +85,7 @@ function VideoSection(props: VideoSectionProps) {
                     }`}
             >
                 <h3
-                    className={`text-3xl font-bold text-white mb-6 ${
+                    className={`text-3xl font-extrabold text-(--foreground) mb-6 ${
                         props.fromLeft ? "text-left" : "text-right"
                     }`}
                 >
@@ -97,7 +97,7 @@ function VideoSection(props: VideoSectionProps) {
                         props.fromLeft ? "" : "flex-row-reverse"
                     }`}
                 >
-                    <div className="flex-1 rounded-xl overflow-hidden bg-black/30">
+                    <div className="flex-1 rounded-xl overflow-hidden bg-(--background)/30">
                         {props.videoSrc ? (
                             <video
                                 src={props.videoSrc}
@@ -108,7 +108,7 @@ function VideoSection(props: VideoSectionProps) {
                                 Your browser does not support the video tag.
                             </video>
                         ) : (
-                            <div className="w-full aspect-video flex items-center justify-center bg-white/5 text-white/40">
+                            <div className="w-full aspect-video flex items-center justify-center bg-(--foreground1)/5 text-(--foreground1)/40">
                                 Video coming soon
                             </div>
                         )}
@@ -119,12 +119,12 @@ function VideoSection(props: VideoSectionProps) {
                             props.fromLeft ? "text-left" : "text-right"
                         }`}
                     >
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-(--foreground2)/80 text-lg leading-relaxed">
                             {props.description}
                         </p>
 
                         <div>
-                            <h4 className="text-white/60 text-sm uppercase tracking-wider mb-3">
+                            <h4 className="text-(--foreground2)/60 text-sm uppercase tracking-wider mb-3">
                                 Tech Stack
                             </h4>
                             <ul
@@ -140,7 +140,7 @@ function VideoSection(props: VideoSectionProps) {
                                         style={{
                                             transitionDelay: `${i * 75}ms`,
                                         }}
-                                        className={`px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm
+                                        className={`px-3 py-1.5 bg-(--foreground2)/10 border border-(--foreground2)/20 rounded-lg text-(--foreground2)/90 text-sm
                                             transition-all duration-300 ease-out
                                             ${
                                                 slideComplete
@@ -163,9 +163,14 @@ function VideoSection(props: VideoSectionProps) {
 export default function Projects() {
     return (
         <div className="home-section items-center" id="projects">
-            <h2 className="text-4xl font-bold text-white text-center mb-16">
+            <h2 className="text-4xl font-bold text-(--foreground2) rounded-2xl text-center mb-8">
                 Projects
             </h2>
+
+            <p className="text-(--foreground2)/60 text-center mb-6 max-w-xl">
+                Projects made across my years of development. (5+ years of
+                development.)
+            </p>
 
             <div className="flex flex-col gap-8 w-4/5">
                 {projectVideos.map((project, index) => (

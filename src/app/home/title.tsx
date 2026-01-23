@@ -12,6 +12,7 @@ import {
     SiGithub,
     SiPaypal,
     SiRoblox,
+    SiWise,
 } from "@icons-pack/react-simple-icons";
 
 const socialLinks = [
@@ -34,6 +35,12 @@ const socialLinks = [
         icon: SiPaypal,
         href: "https://paypal.me/azerothxx",
         hoverColor: "hover:text-blue-500",
+    },
+
+    {
+        icon: SiWise,
+        href: "https://wise.com/pay/me/francexygeldingdingc",
+        hoverColor: "hover:text-green-500",
     },
 ];
 
@@ -59,12 +66,12 @@ const toolsData = [
 ];
 
 const getCSSColor = (variable: string) => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined")
         return getComputedStyle(document.documentElement)
             .getPropertyValue(variable)
             .trim();
-    }
-    return "#ffffff"; // fallback for SSR
+
+    return "#ffffff";
 };
 
 function AnimatedFish() {
@@ -104,7 +111,7 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
 
     const clippingPlane = useMemo(
         () => new Plane(new Vector3(1, 0, 0), 0.5),
-        []
+        [],
     );
 
     useEffect(() => {
@@ -180,7 +187,10 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
     return (
         <animated.group position={position}>
             <Html position={[0, 0, 0]} center>
-                <animatedWeb.div style={{ opacity }} className="flex flex-row">
+                <animatedWeb.div
+                    style={{ opacity }}
+                    className="flex flex-row bg-(--background1) rounded-3xl p-0.5"
+                >
                     {socialLinks.map(({ icon: Icon, href, hoverColor }) => (
                         <a
                             key={href}
@@ -207,7 +217,7 @@ function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
                     className="flex flex-col items-center flex-1"
                 >
                     <h2
-                        className="text-2xl font-bold text-white mb-3"
+                        className="text-2xl font-bold text-(--foreground2) mb-3"
                         style={{
                             opacity: listItemsStart ? 1 : 0,
                             transform: listItemsStart
@@ -222,7 +232,7 @@ function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
                         {data.slice(1).map((item, itemIndex) => (
                             <li
                                 key={item}
-                                className="text-white/80 border border-white/10 rounded px-3 py-2"
+                                className="text-(--foreground2) border border-(--foreground1)/40 rounded px-3 py-2"
                                 style={{
                                     opacity: listItemsStart ? 1 : 0,
                                     transform: listItemsStart

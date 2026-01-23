@@ -53,10 +53,10 @@ function VideoSection(props: VideoSectionProps) {
     }, [inView]);
 
     return (
-        <div ref={ref} className="relative py-16">
+        <div ref={ref} className="relative py-16 overflow-hidden">
             {/* Background panel */}
             <div
-                className={`absolute top-4 bottom-4 w-[85%] bg-(--background1) rounded-2xl -z-10
+                className={`absolute top-4 bottom-4 w-[85%] bg-(--background1) rounded-2xl -z-10 
                     transition-all duration-500 ease-out
                     ${props.fromLeft ? "left-0 ml-0" : "right-0 mr-0"}
                     ${

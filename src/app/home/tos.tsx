@@ -73,7 +73,7 @@ export default function TOS() {
                 Please review the following terms before commissioning work.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 w-4/5 max-w-4xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full px-4 sm:w-4/5 max-w-4xl">
                 {tosItems.map((item, index) => (
                     <TOSItem
                         key={item[0]}

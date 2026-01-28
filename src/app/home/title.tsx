@@ -14,6 +14,10 @@ import {
     SiRoblox,
     SiWise,
 } from "@icons-pack/react-simple-icons";
+import {
+    useWindowSize,
+    type Breakpoint,
+} from "../components/hooks/useWindowSize";
 
 const socialLinks = [
     {
@@ -74,10 +78,16 @@ const getCSSColor = (variable: string) => {
     return "#ffffff";
 };
 
-function AnimatedFish() {
+function Fish3D({ breakpoint }: { breakpoint: Breakpoint }) {
+    const scaleValue =
+        breakpoint === "mobile" ? 0.3 : breakpoint === "tablet" ? 0.4 : 0.5;
+    const xPos = breakpoint === "mobile" ? -4 : -6;
+    const yStart = breakpoint === "mobile" ? -3 : -4;
+    const yEnd = breakpoint === "mobile" ? -3.5 : -4.5;
+
     const { position } = useSpring({
-        from: { position: [-6, -4, 7] as [number, number, number] },
-        to: { position: [-6, -4.5, 7] as [number, number, number] },
+        from: { position: [xPos, yStart, 7] as [number, number, number] },
+        to: { position: [xPos, yEnd, 7] as [number, number, number] },
         config: { tension: 100 },
     });
 
@@ -86,20 +96,34 @@ function AnimatedFish() {
             <Fish
                 position={[0, 0, 0]}
                 rotation={[0, -Math.PI / 2, 0]}
-                scale={0.5}
+                scale={scaleValue}
             />
         </animated.group>
     );
 }
 
-function AnimatedText({ onComplete }: { onComplete?: () => void }) {
+function DeveloperText({
+    onComplete,
+    breakpoint,
+}: {
+    onComplete?: () => void;
+    breakpoint: Breakpoint;
+}) {
     const textRef = useRef<Group>(null);
     const [start, setStart] = useState(false);
 
+    const fontSize =
+        breakpoint === "mobile" ? 0.22 : breakpoint === "tablet" ? 0.28 : 0.35;
+    const startX =
+        breakpoint === "mobile" ? -5 : breakpoint === "tablet" ? -6 : -7;
+    const endX = breakpoint === "desktop" ? 0 : 0;
+    const yPos = breakpoint === "mobile" ? 1 : 1;
+    const anchorX = breakpoint === "desktop" ? "left" : "center";
+
     const { position } = useSpring({
         position: start
-            ? ([0, 1, 0] as [number, number, number])
-            : ([-7, 1, 0] as [number, number, number]),
+            ? ([endX, yPos, 0] as [number, number, number])
+            : ([startX, yPos, 0] as [number, number, number]),
         config: { duration: 800 },
         onRest: onComplete,
     });
@@ -110,7 +134,7 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
     }, []);
 
     const clippingPlane = useMemo(
-        () => new Plane(new Vector3(1, 0, 0), 0.5),
+        () => new Plane(new Vector3(1, 0, 0), 0.8),
         [],
     );
 
@@ -123,32 +147,55 @@ function AnimatedText({ onComplete }: { onComplete?: () => void }) {
                         ? mesh.material
                         : [mesh.material];
                     materials.forEach((mat: Material) => {
-                        mat.clippingPlanes = [clippingPlane];
-                        mat.clipIntersection = false;
+                        // Only apply clipping on desktop, clear it otherwise
+                        if (breakpoint === "desktop") {
+                            mat.clippingPlanes = [clippingPlane];
+                            mat.clipIntersection = false;
+                        } else {
+                            mat.clippingPlanes = null;
+                        }
                     });
                 }
             });
         }
-    }, [clippingPlane]);
+    }, [clippingPlane, breakpoint]);
 
     return (
         <animated.group ref={textRef} position={position}>
             <Text
-                fontSize={0.35}
+                fontSize={fontSize}
                 color={getCSSColor("--foreground2")}
-                anchorX="left"
+                anchorX={anchorX}
             >
-                FULL STACK LUAU{"\n"}DEVELOPER
+                {`FULL STACK LUAU ${breakpoint === "desktop" ? "\n" : ""}DEVELOPER`}
             </Text>
         </animated.group>
     );
 }
 
-function AnimatedSecondText({ start }: { start: boolean }) {
+function NameText({
+    start,
+    breakpoint,
+}: {
+    start: boolean;
+    breakpoint: Breakpoint;
+}) {
+    const fontSize =
+        breakpoint === "mobile" ? 0.3 : breakpoint === "tablet" ? 0.32 : 0.4;
+    const xPos =
+        breakpoint === "mobile" ? 0 : breakpoint === "tablet" ? -2.2 : -2.4;
+    const yStart = breakpoint === "mobile" ? -1 : -3;
+    const yEnd = breakpoint === "mobile" ? -0.3 : -2;
+    const iconSize =
+        breakpoint === "mobile" ? 32 : breakpoint === "tablet" ? 34 : 40;
+    const iconXOffset = breakpoint === "mobile" ? 0 : -0.35;
+    const iconYOffset = breakpoint === "mobile" ? 0.35 : 0;
+    const anchorX = breakpoint === "mobile" ? "center" : "left";
+
     const { position, opacity } = useSpring({
         position: start
-            ? ([-2.8, -2, 0] as [number, number, number])
-            : ([-2.8, -3, 0] as [number, number, number]),
+            ? ([xPos, yEnd, 0] as [number, number, number])
+            : ([xPos, yStart, 0] as [number, number, number]),
         opacity: start ? 0.5 : 0,
         config: { duration: 800 },
     });
@@ -158,28 +205,47 @@ function AnimatedSecondText({ start }: { start: boolean }) {
             <animated.mesh>
                 <Text
                     position={[0, 0, 0.01]}
-                    fontSize={0.4}
+                    fontSize={fontSize}
                     color={getCSSColor("--foreground2")}
-                    anchorX="left"
+                    anchorX={anchorX}
                 >
                     <animated.meshBasicMaterial transparent opacity={opacity} />
                     Azerothxx
                 </Text>
             </animated.mesh>
-            <Html position={[-0.35, 0, 0]} center>
+            <Html position={[iconXOffset, iconYOffset, 0]} center>
                 <animatedWeb.div style={{ opacity }}>
-                    <HardHat className="text-(--foreground2)" size={40} />
+                    <HardHat className="text-(--foreground2)" size={iconSize} />
                 </animatedWeb.div>
             </Html>
         </animated.group>
     );
 }
 
-function AnimatedCommIcons({ start }: { start: boolean }) {
+function CommIcons({
+    start,
+    breakpoint,
+}: {
+    start: boolean;
+    breakpoint: Breakpoint;
+}) {
+    const xPos =
+        breakpoint === "mobile" ? 0 : breakpoint === "tablet" ? 1.6 : 2.0;
+    const yStart = breakpoint === "mobile" ? -2 : -3;
+    const yEnd = breakpoint === "mobile" ? -1.2 : -2;
+    const iconSize =
+        breakpoint === "mobile" ? 28 : breakpoint === "tablet" ? 32 : 40;
+    const margin =
+        breakpoint === "mobile"
+            ? "m-2"
+            : breakpoint === "tablet"
+              ? "m-2"
+              : "m-3";
+
     const { position, opacity } = useSpring({
         position: start
-            ? ([2.3, -2, 0] as [number, number, number])
-            : ([2.3, -3, 0] as [number, number, number]),
+            ? ([xPos, yEnd, 0] as [number, number, number])
+            : ([xPos, yStart, 0] as [number, number, number]),
         opacity: start ? 0.8 : 0,
         config: { duration: 800, delay: 10000 },
     });
@@ -189,7 +255,7 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
             <Html position={[0, 0, 0]} center>
                 <animatedWeb.div
                     style={{ opacity }}
-                    className="flex flex-row bg-(--background1) rounded-3xl p-0.5"
+                    className="flex flex-row bg-(--background1) rounded-2xl sm:rounded-3xl p-0.5"
                 >
                     {socialLinks.map(({ icon: Icon, href, hoverColor }) => (
                         <a
@@ -197,9 +263,9 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`${hoverColor} text-(--foreground) hover:scale-110 transition-all duration-200 m-3`}
+                            className={`${hoverColor} text-(--foreground) hover:scale-110 transition-all duration-200 ${margin}`}
                         >
-                            <Icon size={40} />
+                            <Icon size={iconSize} />
                         </a>
                     ))}
                 </animatedWeb.div>
@@ -208,16 +274,16 @@ function AnimatedCommIcons({ start }: { start: boolean }) {
     );
 }
 
-function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
+function ListItems({ listItemsStart }: { listItemsStart: boolean }) {
     return (
-        <div className="flex flex-row gap-6 max-w-4xl">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-4xl w-full px-4 sm:px-0">
             {toolsData.map((data, sectionIndex) => (
                 <div
                     key={data[0]}
                     className="flex flex-col items-center flex-1"
                 >
                     <h2
-                        className="text-2xl font-bold text-(--foreground2) mb-3"
+                        className="text-xl sm:text-2xl font-bold text-(--foreground2) mb-2 sm:mb-3"
                         style={{
                             opacity: listItemsStart ? 1 : 0,
                             transform: listItemsStart
@@ -232,7 +298,7 @@ function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
                         {data.slice(1).map((item, itemIndex) => (
                             <li
                                 key={item}
-                                className="text-(--foreground2) border border-(--foreground1)/40 rounded px-3 py-2"
+                                className="text-sm sm:text-base text-(--foreground2) border border-(--foreground1)/40 rounded px-2 py-1 sm:px-3 sm:py-2"
                                 style={{
                                     opacity: listItemsStart ? 1 : 0,
                                     transform: listItemsStart
@@ -258,30 +324,48 @@ function AnimatedListItems({ listItemsStart }: { listItemsStart: boolean }) {
 export default function Title() {
     const [secondTextStart, setSecondTextStart] = useState(false);
     const [listItemsStart, setListItemsStart] = useState(false);
+    const { breakpoint } = useWindowSize();
 
     const handleFirstTextComplete = () => {
         setSecondTextStart(true);
         setTimeout(() => setListItemsStart(true), 500);
     };
 
+    const fov =
+        breakpoint === "mobile" ? 85 : breakpoint === "tablet" ? 80 : 75;
+
+    const showList = breakpoint === "desktop";
+
     return (
         <div className="home-section h-full items-center" id="title">
-            <div className="h-2/3 w-2/3">
+            <div
+                className={`w-full ${breakpoint === "mobile" ? "h-full" : "sm:h-2/3 sm:w-5/6 lg:w-2/3"}`}
+            >
                 <Canvas
-                    camera={{ position: [0, 0, 4], fov: 75 }}
+                    camera={{ position: [0, 0, 4], fov }}
                     gl={{ localClippingEnabled: true }}
                 >
                     <Environment preset="city" />
 
-                    <AnimatedFish />
-                    <AnimatedText onComplete={handleFirstTextComplete} />
-                    <AnimatedSecondText start={secondTextStart} />
-                    <AnimatedCommIcons start={secondTextStart} />
+                    {breakpoint === "desktop" && (
+                        <Fish3D breakpoint={breakpoint} />
+                    )}
+                    <DeveloperText
+                        onComplete={handleFirstTextComplete}
+                        breakpoint={breakpoint}
+                    />
+                    <NameText start={secondTextStart} breakpoint={breakpoint} />
+                    <CommIcons
+                        start={secondTextStart}
+                        breakpoint={breakpoint}
+                    />
                 </Canvas>
             </div>
-            <div className="h-1/3 w-full p-8 flex justify-around">
-                <AnimatedListItems listItemsStart={listItemsStart} />
-            </div>
+            {showList && (
+                <div className="h-1/3 w-full p-8 flex justify-around">
+                    <ListItems listItemsStart={listItemsStart} />
+                </div>
+            )}
         </div>
     );
 }

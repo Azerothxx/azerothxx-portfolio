@@ -123,7 +123,7 @@ export default function Pricing() {
                 <span>Fees covered by sender.</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 w-4/5 max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4 sm:w-4/5 max-w-5xl">
                 {pricingPlans.map((plan, index) => (
                     <PricingCard
                         key={plan.name}

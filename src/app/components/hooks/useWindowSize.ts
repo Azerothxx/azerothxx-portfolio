@@ -9,25 +9,20 @@ export interface WindowSize {
     breakpoint: Breakpoint;
 }
 
-export function useWindowSize(): WindowSize {
-    function getBreakpoint(width: number): Breakpoint {
-        if (width < 640) return "mobile";
-        if (width < 1024) return "tablet";
-        return "desktop";
-    }
+function getBreakpoint(width: number): Breakpoint {
+    if (width < 640) return "mobile";
+    if (width < 1024) return "tablet";
+    return "desktop";
+}
 
-    const [windowSize, setWindowSize] = useState<WindowSize>(() => {
-        const width = typeof window !== "undefined" ? window.innerWidth : 1024;
-        const height = typeof window !== "undefined" ? window.innerHeight : 768;
-        return {
-            width,
-            height,
-            breakpoint: getBreakpoint(width),
-        };
+export function useWindowSize(): WindowSize {
+    const [windowSize, setWindowSize] = useState<WindowSize>({
+        width: 1024,
+        height: 768,
+        breakpoint: "tablet",
     });
 
     useEffect(() => {
-
         function handleResize() {
             const width = window.innerWidth;
             const height = window.innerHeight;

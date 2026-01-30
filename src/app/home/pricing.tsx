@@ -1,6 +1,6 @@
 "use client";
 import { Check } from "lucide-react";
-import { useInView } from "../components/hooks/useInView";
+import { useInView } from "@react-spring/core";
 import { SiPaypal } from "@icons-pack/react-simple-icons";
 
 interface PricingCardProps {
@@ -48,7 +48,7 @@ const pricingPlans = [
 ];
 
 function PricingCard(props: PricingCardProps) {
-    const { ref, inView } = useInView(0.2);
+    const [ref, inView] = useInView({ amount: 0.2 });
 
     return (
         <div
@@ -71,13 +71,18 @@ function PricingCard(props: PricingCardProps) {
                     Most Popular
                 </span>
             )}
-            <h3 className="text-2xl font-bold text-(--foreground2)">{props.name}</h3>
+            <h3 className="text-2xl font-bold text-(--foreground2)">
+                {props.name}
+            </h3>
             <div className="mt-4">
                 <span className="text-4xl font-bold text-(--foreground2)">
                     {props.price}
                 </span>
             </div>
-            <p className="mt-2 text-(--foreground2)/60 text-sm">{props.description}</p>
+            <p className="mt-2 text-(--foreground2)/60 text-sm">
+                {props.description}
+            </p>
+            <p className="mt-2 text-(--foreground2)/60 text-sm">May Include:</p>
 
             <ul className="mt-6 flex flex-col gap-3 flex-1">
                 {props.features.map((feature) => (

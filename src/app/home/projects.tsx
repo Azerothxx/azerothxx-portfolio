@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useInView } from "../components/hooks/useInView";
+import { useInView } from "@react-spring/core";
 
 interface VideoSectionProps {
     title: string;
@@ -56,17 +56,13 @@ function VideoSectionBackground({
                     sm:left-1/2 sm:-translate-x-1/2 sm:w-[92%]
                     lg:translate-x-0 lg:w-[88%]
                     ${fromLeft ? "lg:left-0 lg:right-auto" : "lg:left-auto lg:right-0"}
-                    ${
-                        inView
-                            ? "opacity-100"
-                            : `opacity-0`
-                    }`}
+                    ${inView ? "opacity-100" : `opacity-0`}`}
         />
     );
 }
 
 function VideoSection(props: VideoSectionProps) {
-    const { ref, inView } = useInView(0.2);
+    const [ref, inView] = useInView({ amount: 0.2 });
     const [slideComplete, setSlideComplete] = useState(false);
 
     useEffect(() => {
@@ -156,7 +152,7 @@ function VideoSection(props: VideoSectionProps) {
                             props.fromLeft ? "text-left" : "text-right"
                         }`}
                     >
-                        <p className="text-(--foreground2)/80 text-sm lg:text-base leading-relaxed break-words overflow-wrap-anywhere">
+                        <p className="text-(--foreground2)/80 text-sm lg:text-base leading-relaxed wrap-break-word overflow-wrap-anywhere">
                             {props.description}
                         </p>
 
@@ -217,7 +213,7 @@ export default function Projects() {
                         videoSrc={project.videoSrc}
                         description={project.description}
                         techStack={project.techStack}
-                        fromLeft={index % 2 === 0} // Alternates: left, right, left, right...
+                        fromLeft={index % 2 === 0}
                         index={index}
                     />
                 ))}

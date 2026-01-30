@@ -56,6 +56,7 @@ const toolsData = [
         "Rojo",
         "Git",
         "Luau Language Server",
+        "Flamework",
     ],
     [
         "Packages",
@@ -70,12 +71,17 @@ const toolsData = [
 ];
 
 const getCSSColor = (variable: string) => {
-    if (typeof window !== "undefined")
-        return getComputedStyle(document.documentElement)
-            .getPropertyValue(variable)
-            .trim();
+    if (typeof window === "undefined") return "#ffffff";
 
-    return "#ffffff";
+    try {
+        return (
+            getComputedStyle(document.documentElement)
+                .getPropertyValue(variable)
+                .trim() || "#ffffff"
+        );
+    } catch {
+        return "#ffffff";
+    }
 };
 
 function Fish3D({ breakpoint }: { breakpoint: Breakpoint }) {

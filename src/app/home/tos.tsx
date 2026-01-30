@@ -1,10 +1,10 @@
 "use client";
-import { useInView } from "../components/hooks/useInView";
+import { useInView } from "@react-spring/core";
 
 const tosItems = [
     [
         "Payment",
-        "50% upfront payment is required before work begins. The remaining 50% is due upon completion before delivery of the final product.",
+        "50% upfront payment is required before work begins. The remaining 50% is due upon completion before delivery of the final product. Rates are based off of foreign exchange rate.",
     ],
     [
         "Revisions",
@@ -43,7 +43,7 @@ interface TOSItemProps {
 }
 
 function TOSItem(props: TOSItemProps) {
-    const { ref, inView } = useInView(0.2);
+    const [ref, inView] = useInView({ amount: 0.2 });
     const fromLeft = props.index % 2 === 0;
 
     return (

@@ -62,7 +62,7 @@ function VideoSectionBackground({
 }
 
 function VideoSection(props: VideoSectionProps) {
-    const [ref, inView] = useInView({ amount: 0.2 });
+    const [ref, inView] = useInView({ amount: 0.2, once: true });
     const [slideComplete, setSlideComplete] = useState(false);
 
     useEffect(() => {

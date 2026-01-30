@@ -43,7 +43,7 @@ interface TOSItemProps {
 }
 
 function TOSItem(props: TOSItemProps) {
-    const [ref, inView] = useInView({ amount: 0.2 });
+    const [ref, inView] = useInView({ amount: 0.2, once: true });
     const fromLeft = props.index % 2 === 0;
 
     return (

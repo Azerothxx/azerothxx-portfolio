@@ -48,7 +48,7 @@ const pricingPlans = [
 ];
 
 function PricingCard(props: PricingCardProps) {
-    const [ref, inView] = useInView({ amount: 0.2 });
+    const [ref, inView] = useInView({ amount: 0.2, once: true });
 
     return (
         <div

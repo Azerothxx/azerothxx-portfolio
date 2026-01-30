@@ -19,7 +19,8 @@ const projectVideos: {
 }[] = [
     {
         title: "Extensive Gun System",
-        videoSrc: "videos/gun-system.mp4",
+        videoSrc:
+            "https://obndkcz0jnr0vf76.public.blob.vercel-storage.com/videos/gun-system.mp4",
         description:
             "Compability between R6 and R15 that allows for full customization for each individual gun. " +
             "Also comes with a simple movement system of rolling left and right.",
@@ -27,7 +28,8 @@ const projectVideos: {
     },
     {
         title: "Snowy Mountain Ambience",
-        videoSrc: "videos/ambience-system.mp4",
+        videoSrc:
+            "https://obndkcz0jnr0vf76.public.blob.vercel-storage.com/videos/ambience-system.mp4",
         description:
             "Ambience system with complete zone detection that smoothly transitions effects of adjacent zones.",
         techStack: ["Knit", "Trove", "Signal"],

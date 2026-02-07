@@ -20,7 +20,7 @@ const projectVideos: {
     {
         title: "Extensive Gun System",
         videoSrc:
-            "https://obndkcz0jnr0vf76.public.blob.vercel-storage.com/videos/gun-system.mp4",
+            "https://www.youtube.com/embed/KqMX3x38kYo?si=7qF410YDsSRiPMoK",
         description:
             "Compability between R6 and R15 that allows for full customization for each individual gun. " +
             "Also comes with a simple movement system of rolling left and right.",
@@ -29,7 +29,7 @@ const projectVideos: {
     {
         title: "Snowy Mountain Ambience",
         videoSrc:
-            "https://obndkcz0jnr0vf76.public.blob.vercel-storage.com/videos/ambience-system.mp4",
+            "https://www.youtube.com/embed/Udtr9I0y6bQ?si=oIZbQpFQIALGcoLx",
         description:
             "Ambience system with complete zone detection that smoothly transitions effects of adjacent zones.",
         techStack: ["Knit", "Trove", "Signal"],
@@ -134,14 +134,17 @@ function VideoSection(props: VideoSectionProps) {
                 >
                     <div className="flex-1 rounded-xl overflow-hidden bg-(--background)/30 min-w-0 max-w-full">
                         {props.videoSrc ? (
-                            <video
+                            <iframe
                                 src={props.videoSrc}
                                 className="w-full aspect-video object-cover"
-                                controls
-                                playsInline
+                                width="560"
+                                height="315"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
                             >
                                 Your browser does not support the video tag.
-                            </video>
+                            </iframe>
                         ) : (
                             <div className="w-full aspect-video flex items-center justify-center bg-(--foreground1)/5 text-(--foreground1)/40">
                                 Video coming soon
